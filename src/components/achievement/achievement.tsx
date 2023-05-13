@@ -68,8 +68,8 @@ export const Achievement = component$(() => {
     seriesSignal.value = series;
   });
   useVisibleTask$(async () => {
-    const series = await seriesServer;
-    const localAchievements = await getOrCreateOrUpdateAchievements(series);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const localAchievements = await getOrCreateOrUpdateAchievements(seriesSignal.value!);
     localAchievementsSignal.value = localAchievements;
   });
 
