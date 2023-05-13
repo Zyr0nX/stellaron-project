@@ -64,11 +64,12 @@ export const Achievement = component$(() => {
   const localAchievementsSignal = useSignal<LocalAchievement[]>();
   const seriesSignal = useSignal<Series[]>();
   useTask$(async () => {
-    const series = await seriesServer();
+    const series = await seriesServer;
     seriesSignal.value = series;
   });
   useVisibleTask$(async () => {
-    const localAchievements = await getOrCreateOrUpdateAchievements();
+    const series = await seriesServer;
+    const localAchievements = await getOrCreateOrUpdateAchievements(series);
     localAchievementsSignal.value = localAchievements;
   });
 

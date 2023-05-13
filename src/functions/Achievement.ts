@@ -68,13 +68,11 @@ const getSeries = () => {
   return groupedBySeries;
 };
 
-export const seriesServer = server$(() => getSeries());
+export const seriesServer = server$(() => getSeries())();
 
-export const getOrCreateOrUpdateAchievements = async () => {
+export const getOrCreateOrUpdateAchievements = async (series: Series[]) => {
   const localAchievements: LocalAchievement[] | null =
     await localforage.getItem("achievements");
-  const series = getSeries();
-  console.log(series);
   if (!localAchievements) {
     const newLocalAchievement: LocalAchievement[] = series.map((series) => ({
       id: series.id,
