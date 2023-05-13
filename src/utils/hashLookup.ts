@@ -1,8 +1,6 @@
 import TextMapEN from "StarRailData/TextMap/TextMapEN.json";
 
-interface TextMap {
-  [key: number]: string;
-}
+type TextMap = Record<number, string>;
 
 export const hashLookup = (hash: number) => {
   if (!Object.prototype.hasOwnProperty.call(TextMapEN, hash)) {

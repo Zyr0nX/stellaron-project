@@ -12,7 +12,7 @@ export default extendConfig(baseConfig, () => {
     },
     plugins: [
       staticAdapter({
-        origin: 'https://localhost:5173',
+        origin: 'https://stellaron.vercel.app',
       }),
     ],
   };
