@@ -1,5 +1,10 @@
 lockfileVersion: '6.0'
 
+dependencies:
+  StarRailData:
+    specifier: github:DimBreath/StarRailData
+    version: github.com/DimBreath/StarRailData/6afd96fa9660510232f291909646551af52e6f96
+
 devDependencies:
   '@builder.io/qwik':
     specifier: ^1.1.1
@@ -7801,3 +7806,9 @@ packages:
   /zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
+
+  github.com/DimBreath/StarRailData/6afd96fa9660510232f291909646551af52e6f96:
+    resolution: {tarball: https://codeload.github.com/DimBreath/StarRailData/tar.gz/6afd96fa9660510232f291909646551af52e6f96}
+    name: StarRailData
+    version: 0.0.0
+    dev: false
