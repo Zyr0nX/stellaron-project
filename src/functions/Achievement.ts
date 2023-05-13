@@ -19,6 +19,7 @@ const getSeriesName = (id: number) => {
 };
 
 const getSeries = () => {
+  console.log("getting");
   const achievements: RawDataAchievement = achievementData;
   const groupedBySeries = Object.values(achievements).reduce<Series[]>(
     (acc, data) => {
@@ -72,7 +73,7 @@ export const seriesServer = server$(() => getSeries());
 export const getOrCreateOrUpdateAchievements = async () => {
   const localAchievements: LocalAchievement[] | null =
     await localforage.getItem("achievements");
-  const series = await seriesServer();
+  const series = getSeries();
   console.log(series);
   if (!localAchievements) {
     const newLocalAchievement: LocalAchievement[] = series.map((series) => ({
