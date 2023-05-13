@@ -75,13 +75,15 @@ export const Achievement = component$(() => {
   return (
     <div class="flex flex-col gap-4">
       {seriesSignal.value?.map((series) => (
-        <div class="flex flex-col gap-4" key={series.name}>
-          <Series
-            series={series}
-            data={localAchievementsSignal.value?.find(
-              (localAchievement) => localAchievement.id === series.id
-            )}
-          />
+        <div class="flex flex-col gap-4" key={series.id}>
+          {localAchievementsSignal.value && (
+            <Series
+              series={series}
+              data={localAchievementsSignal.value.find(
+                (localAchievement) => localAchievement.id === series.id
+              )}
+            />
+          )}
         </div>
       ))}
     </div>

@@ -73,6 +73,7 @@ export const getOrCreateOrUpdateAchievements = async () => {
   const localAchievements: LocalAchievement[] | null =
     await localforage.getItem("achievements");
   const series = await seriesServer();
+  console.log(series);
   if (!localAchievements) {
     const newLocalAchievement: LocalAchievement[] = series.map((series) => ({
       id: series.id,
