@@ -16,7 +16,7 @@ import {
   seriesServer,
 } from "~/functions/Achievement";
 
-const Series = component$<SeriesProps>(({ series, data }) => {
+const Series = ({ series, data }: SeriesProps) => {
   if (!data) return null;
   return (
     <div class="relative bg-blue-950 flex items-center rounded-lg pt-3 pb-4 px-6 overflow-hidden">
@@ -58,7 +58,7 @@ const Series = component$<SeriesProps>(({ series, data }) => {
       ></div>
     </div>
   );
-});
+};
 
 export const Achievement = component$(() => {
   const localAchievementsSignal = useSignal<LocalAchievement[]>();

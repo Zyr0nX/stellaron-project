@@ -53,7 +53,7 @@ const getSeries = () => {
                 name: hashLookup(data.AchievementTitle.Hash),
                 description: hashLookup(data.AchievementDesc.Hash),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
-                version: "a",
+                version: "1.0",
               },
             ],
           };

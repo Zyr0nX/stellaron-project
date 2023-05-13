@@ -119,3 +119,9 @@ You can [deploy your site to Vercel](https://vercel.com/docs/concepts/deployment
 ```
 pnpm build.server
 ```
+
+## Static Site Generator (Node.js)
+
+```
+pnpm build.server
+```
