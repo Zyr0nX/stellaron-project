@@ -1,81 +1,34 @@
+import { server$ } from "@builder.io/qwik-city";
 import achievementData from "StarRailData/ExcelOutput/AchievementData.json";
 import achievementSeries from "StarRailData/ExcelOutput/AchievementSeries.json";
+import {
+  LocalAchievement,
+  RawDataAchievement,
+  RawDataSeries,
+  Series,
+} from "~/types/achievement";
 import { hashLookup } from "~/utils/hashLookup";
+import localforage from "~/utils/localforage";
 
-type AchievementData = Record<
-  string,
-  {
-    AchievementID: number;
-    SeriesID: number;
-    QuestID: number;
-    LinearQuestID: number;
-    AchievementTitle: {
-      Hash: number;
-    };
-    AchievementDesc: {
-      Hash: number;
-    };
-    HideAchievementDesc: {
-      Hash: number;
-    };
-    ParamList: {
-      Value: number;
-    }[];
-    Priority: number;
-    Rarity: string;
-    ShowType?: string;
-    RecordText: {
-      Hash: number;
-    };
-  }
->;
-
-type AchievementSeries = Record<
-  string,
-  {
-    SeriesID: number;
-    SeriesTitle: {
-      Hash: number;
-    };
-    MainIconPath: string;
-    IconPath: string;
-    GoldIconPath: string;
-    SilverIconPath: string;
-    CopperIconPath: string;
-    Priority: number;
-  }
->;
-
-interface Achievement {
-  name: string;
-  achievement: {
-    id: number;
-    name: string;
-    description: string;
-    reward: number;
-    version: string;
-  }[];
-}
-
-const getSeries = (id: number) => {
-  const series: AchievementSeries = achievementSeries;
+const getSeriesName = (id: number) => {
+  const series: RawDataSeries = achievementSeries;
   if (!Object.prototype.hasOwnProperty.call(series, id)) {
     throw new Error(`Series ${id} not found`);
   }
   return hashLookup(series[id].SeriesTitle.Hash);
 };
 
-// Prints out achievements
-export const getAchievements = () => {
-  const achievements: AchievementData = achievementData;
-  const groupedBySeries = Object.values(achievements).reduce<Achievement[]>(
+const getSeries = () => {
+  const achievements: RawDataAchievement = achievementData;
+  const groupedBySeries = Object.values(achievements).reduce<Series[]>(
     (acc, data) => {
-      const seriesName = getSeries(data.SeriesID);
+      const seriesName = getSeriesName(data.SeriesID);
       const series = acc.find((s) => s.name === seriesName);
       if (!series) {
         return [
           ...acc,
           {
+            id: data.SeriesID,
             name: seriesName,
             achievement: [
               {
@@ -112,4 +65,55 @@ export const getAchievements = () => {
   );
 
   return groupedBySeries;
+};
+
+export const seriesServer = server$(() => getSeries());
+
+export const getOrCreateOrUpdateAchievements = async () => {
+  const localAchievements: LocalAchievement[] | null =
+    await localforage.getItem("achievements");
+  const series = await seriesServer();
+  if (!localAchievements) {
+    const newLocalAchievement: LocalAchievement[] = series.map((series) => ({
+      id: series.id,
+      achievement: series.achievement.map((achievement) => ({
+        id: achievement.id,
+        status: false,
+      })),
+    }));
+    void localforage.setItem("achievements", newLocalAchievement);
+    return newLocalAchievement;
+  }
+
+  const newLocalAchievement = series.map((series) => {
+    const localSeries = localAchievements.find(
+      (localSeries) => localSeries.id === series.id
+    );
+    if (!localSeries) {
+      return {
+        id: series.id,
+        achievement: series.achievement.map((achievement) => ({
+          id: achievement.id,
+          status: false,
+        })),
+      };
+    }
+    return {
+      ...localSeries,
+      achievement: series.achievement.map((achievement) => {
+        const localAchievement = localSeries.achievement.find(
+          (localAchievement) => localAchievement.id === achievement.id
+        );
+        if (!localAchievement) {
+          return {
+            id: achievement.id,
+            status: false,
+          };
+        }
+        return localAchievement;
+      }),
+    };
+  });
+  void localforage.setItem("achievements", newLocalAchievement);
+  return newLocalAchievement;
 };
