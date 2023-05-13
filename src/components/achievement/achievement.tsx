@@ -17,19 +17,18 @@ import {
 } from "~/functions/Achievement";
 
 const Series = ({ series, data }: SeriesProps) => {
-  if (!data) return null;
   return (
     <div class="relative bg-blue-950 flex items-center rounded-lg pt-3 pb-4 px-6 overflow-hidden">
       <button class="flex flex-col gap-1 grow">
         <p class="text-lg font-semibold">{series.name}</p>
         <p class="font-light">
-          {data.achievement.reduce((acc, obj) => {
+          {data?.achievement.reduce((acc, obj) => {
             if (obj.status) {
               return acc + 1;
             } else {
               return acc;
             }
-          }, 0)}
+          }, 0) ?? 0}
           /{series.achievement.length}
         </p>
       </button>
@@ -46,13 +45,13 @@ const Series = ({ series, data }: SeriesProps) => {
         class="absolute h-1 bottom-0 bg-teal-500 left-0 transition-all"
         style={{
           width: `${
-            data.achievement.reduce((acc, obj) => {
+            data?.achievement.reduce((acc, obj) => {
               if (obj.status) {
                 return acc + 1;
               } else {
                 return acc;
               }
-            }, 0) / series.achievement.length
+            }, 0) ?? 0 / series.achievement.length
           }%`,
         }}
       ></div>
