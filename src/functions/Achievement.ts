@@ -34,10 +34,7 @@ const getSeries = () => {
               {
                 id: data.AchievementID,
                 name: hashLookup(data.AchievementTitle.Hash)
-                  .replace(
-                    /<unbreak>(.*?)<\/unbreak>/g,
-                    "<unbreak>$1</unbreak>"
-                  )
+                  .replace(/<unbreak>(.*?)<\/unbreak>/g, "<strong>$1</strong>")
                   .replace(/<i>(.*?)<\/i>/g, "<em>$1</em>"),
                 description: hashLookup(data.AchievementDesc.Hash)
                   .replace(/#(\d+)\[i\]/g, (m, i) =>
@@ -45,10 +42,7 @@ const getSeries = () => {
                       ? (+data.ParamList[i - 1].Value.toFixed(2)).toString()
                       : ""
                   )
-                  .replace(
-                    /<unbreak>(.*?)<\/unbreak>/g,
-                    "<unbreak>$1</unbreak>"
-                  )
+                  .replace(/<unbreak>(.*?)<\/unbreak>/g, "<strong>$1</strong>")
                   .replace(/\\n<color=#8790abff>※ (.*?)<\/color>/g, "</br>$1"),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
                 version: "1.0",
@@ -74,10 +68,7 @@ const getSeries = () => {
                       ? (+data.ParamList[i - 1].Value.toFixed(2)).toString()
                       : ""
                   )
-                  .replace(
-                    /<unbreak>(.*?)<\/unbreak>/g,
-                    "<unbreak>$1</unbreak>"
-                  )
+                  .replace(/<unbreak>(.*?)<\/unbreak>/g, "<strong>$1</strong>")
                   .replace(/\\n<color=#8790abff>※ (.*?)<\/color>/g, "</br>$1"),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
                 version: "1.0",
@@ -95,7 +86,6 @@ const getSeries = () => {
 };
 
 export const seriesServer = server$(() => {
-  console.log(getSeries().map((s) => s.achievement.map((a) => a.description)));
   return getSeries();
 })();
 
