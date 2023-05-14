@@ -41,7 +41,9 @@ export const AchievementSection = component$(
       throw new Error("Series not found");
     }
     return (
-      <div class="flex flex-col gap-6">
+      <div class={`flex flex-col gap-6 ${
+            selectedSeriesSignal.value ? "" : "hidden"
+          }`}>
         <div class="flex items-center justify-between">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6" onClick$={() => {
             selectedSeriesSignal.value = seriesSignal.value?.findIndex((a) => a.id === series.id) === 0 ? seriesSignal.value[seriesSignal.value.length - 1] : seriesSignal.value?.find((a) => a.id === series.id - 1);
@@ -71,9 +73,7 @@ export const AchievementSection = component$(
 
         </div>
         <div
-          class={`flex flex-col gap-4 ${
-            selectedSeriesSignal.value ? "" : "hidden"
-          }`}
+          class="flex flex-col gap-4"
         >
           {series.achievement.map((achievement) => (
             <Achievement
