@@ -45,9 +45,11 @@ export const AchievementSection = component$(
             selectedSeriesSignal.value ? "" : "hidden"
           }`}>
         <div class="flex items-center justify-between">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6" onClick$={() => {
-            selectedSeriesSignal.value = seriesSignal.value?.findIndex((a) => a.id === series.id) === 0 ? seriesSignal.value[seriesSignal.value.length - 1] : seriesSignal.value?.find((a) => a.id === series.id - 1);
-          }}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6" onClick$={
+            () => {
+              selectedSeriesSignal.value = seriesSignal.value?.findIndex((a) => a.id === series.id) === (seriesSignal.value?.length ?? 1) - 1 ? seriesSignal.value[0] : seriesSignal.value?.find((a) => a.id === series.id + 1);
+            }
+          }>
             <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
           </svg>
 
@@ -62,11 +64,9 @@ export const AchievementSection = component$(
             }, 0) ?? 0}
             /{series.achievement.length}</p>
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6" onClick$={
-            () => {
-              selectedSeriesSignal.value = seriesSignal.value?.findIndex((a) => a.id === series.id) === (seriesSignal.value?.length ?? 1) - 1 ? seriesSignal.value[0] : seriesSignal.value?.find((a) => a.id === series.id + 1);
-            }
-          }>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6"  onClick$={() => {
+            selectedSeriesSignal.value = seriesSignal.value?.findIndex((a) => a.id === series.id) === 0 ? seriesSignal.value[seriesSignal.value.length - 1] : seriesSignal.value?.find((a) => a.id === series.id - 1);
+          }}>
             <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
           </svg>
 
@@ -110,7 +110,7 @@ export const Achievement = component$(
     return (
       <div class="bg-blue-950 flex rounded-lg pt-3 pb-4 px-6 overflow-hidden justify-between">
         <div class="flex flex-col gap-1 grow">
-          <p class="text-lg font-semibold">{achievement.name}</p>
+          <p class="text-lg font-semibold" dangerouslySetInnerHTML={achievement.name} />
           <p
             class="font-light text-xs"
             dangerouslySetInnerHTML={achievement.description}

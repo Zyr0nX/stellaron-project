@@ -23,7 +23,7 @@ const getSeries = () => {
   const groupedBySeries = Object.values(achievements).reduce<Series[]>(
     (acc, data) => {
       const seriesName = getSeriesName(data.SeriesID);
-      const series = acc.find((s) => s.name === seriesName);
+      const series = acc.find((s) => s.id === data.SeriesID);
       if (!series) {
         return [
           ...acc,
@@ -33,15 +33,23 @@ const getSeries = () => {
             achievement: [
               {
                 id: data.AchievementID,
-                name: hashLookup(data.AchievementTitle.Hash),
+                name: hashLookup(data.AchievementTitle.Hash)
+                  .replace(
+                    /<unbreak>(.*?)<\/unbreak>/g,
+                    "<unbreak>$1</unbreak>"
+                  )
+                  .replace(/<i>(.*?)<\/i>/g, "<em>$1</em>"),
                 description: hashLookup(data.AchievementDesc.Hash)
                   .replace(/#(\d+)\[i\]/g, (m, i) =>
                     data.ParamList[i - 1]
-                      ? data.ParamList[i - 1].Value.toString()
+                      ? (+data.ParamList[i - 1].Value.toFixed(2)).toString()
                       : ""
                   )
-                  .replace(/unbreak/g, "strong")
-                  .replace(/\n※ /g, "</br>"),
+                  .replace(
+                    /<unbreak>(.*?)<\/unbreak>/g,
+                    "<unbreak>$1</unbreak>"
+                  )
+                  .replace(/\\n<color=#8790abff>※ (.*?)<\/color>/g, "</br>$1"),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
                 version: "1.0",
               },
@@ -50,22 +58,27 @@ const getSeries = () => {
         ];
       }
       return acc.map((s) => {
-        if (s.name === seriesName) {
+        if (s.id === data.SeriesID) {
           return {
             ...s,
             achievement: [
               ...s.achievement,
               {
                 id: data.AchievementID,
-                name: hashLookup(data.AchievementTitle.Hash),
+                name: hashLookup(data.AchievementTitle.Hash)
+                  .replace(/<unbreak>(.*?)<\/unbreak>/g, "<strong>$1</strong>")
+                  .replace(/<i>(.*?)<\/i>/g, "<em>$1</em>"),
                 description: hashLookup(data.AchievementDesc.Hash)
                   .replace(/#(\d+)\[i\]/g, (m, i) =>
                     data.ParamList[i - 1]
-                      ? data.ParamList[i - 1].Value.toString()
+                      ? (+data.ParamList[i - 1].Value.toFixed(2)).toString()
                       : ""
                   )
-                  .replace(/unbreak/g, "strong")
-                  .replace(/\n※ /g, "</br>"),
+                  .replace(
+                    /<unbreak>(.*?)<\/unbreak>/g,
+                    "<unbreak>$1</unbreak>"
+                  )
+                  .replace(/\\n<color=#8790abff>※ (.*?)<\/color>/g, "</br>$1"),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
                 version: "1.0",
               },
@@ -81,7 +94,10 @@ const getSeries = () => {
   return groupedBySeries;
 };
 
-export const seriesServer = server$(() => getSeries())();
+export const seriesServer = server$(() => {
+  console.log(getSeries().map((s) => s.achievement.map((a) => a.description)));
+  return getSeries();
+})();
 
 export const getOrCreateOrUpdateAchievements = async (
   series: Series[] | undefined
