@@ -2,7 +2,7 @@ import { component$ } from "@builder.io/qwik";
 
 export const Header = component$(() => {
   return (
-    <div class="h-24 bg-blue-950 flex items-center p-4 justify-between">
+    <div class="flex h-24 items-center justify-between bg-blue-950 p-4">
       <h1 class="font-serif text-xl font-semibold tracking-widest">
         Stellaron
       </h1>
@@ -13,7 +13,7 @@ export const Header = component$(() => {
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="w-8 h-8"
+          class="h-8 w-8"
         >
           <path
             stroke-linecap="round"

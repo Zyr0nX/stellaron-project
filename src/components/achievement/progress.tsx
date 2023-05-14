@@ -8,15 +8,15 @@ export interface ProgressProps {
 export const Progress = component$<ProgressProps>(({ progress, total }) => {
   return (
     <div class="flex flex-col gap-1.5">
-      <div class="flex justify-between items-center font-semibold">
+      <div class="flex items-center justify-between font-semibold">
         <p>Achievement:</p>
         <p>
           {progress}/{total}
         </p>
       </div>
-      <div class="bg-blue-950 relative h-1">
+      <div class="relative h-1 bg-blue-950">
         <div
-          class="bg-teal-500 absolute h-1 transition-all"
+          class="absolute h-1 bg-teal-500 transition-all"
           style={{ width: `${(progress * 100) / total}%` }}
         ></div>
       </div>

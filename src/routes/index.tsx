@@ -1,6 +1,6 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
+import { Achievements } from "~/components/achievement/achievement";
 import { Progress } from "~/components/achievement/progress";
-import { Achievement } from "~/components/achievement/achievement";
 import { Header } from "~/components/shared/header";
 import { LocalAchievement } from "~/types/achievement";
 import localforage from "~/utils/localforage";
@@ -23,7 +23,7 @@ export default component$(() => {
       <Header />
       <div class=" m-4 flex flex-col gap-5">
         <Progress progress={50} total={100} />
-        <Achievement />
+        <Achievements />
       </div>
     </>
   );

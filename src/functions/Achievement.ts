@@ -19,7 +19,6 @@ const getSeriesName = (id: number) => {
 };
 
 const getSeries = () => {
-  console.log("getting");
   const achievements: RawDataAchievement = achievementData;
   const groupedBySeries = Object.values(achievements).reduce<Series[]>(
     (acc, data) => {
@@ -35,7 +34,13 @@ const getSeries = () => {
               {
                 id: data.AchievementID,
                 name: hashLookup(data.AchievementTitle.Hash),
-                description: hashLookup(data.AchievementDesc.Hash),
+                description: hashLookup(data.AchievementDesc.Hash)
+                  .replace(/#(\d+)\[i\]/g, (m, i) =>
+                    data.ParamList[i - 1]
+                      ? data.ParamList[i - 1].Value.toString()
+                      : ""
+                  )
+                  .replace(/unbreak/g, "strong"),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
                 version: "a",
               },
@@ -52,7 +57,13 @@ const getSeries = () => {
               {
                 id: data.AchievementID,
                 name: hashLookup(data.AchievementTitle.Hash),
-                description: hashLookup(data.AchievementDesc.Hash),
+                description: hashLookup(data.AchievementDesc.Hash)
+                  .replace(/#(\d+)\[i\]/g, (m, i) =>
+                    data.ParamList[i - 1]
+                      ? data.ParamList[i - 1].Value.toString()
+                      : ""
+                  )
+                  .replace(/unbreak/g, "strong"),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
                 version: "1.0",
               },
@@ -70,12 +81,52 @@ const getSeries = () => {
 
 export const seriesServer = server$(() => getSeries())();
 
-export const getOrCreateAchievements = async () => {
+export const getOrCreateOrUpdateAchievements = async (
+  series: Series[] | undefined
+) => {
   const localAchievements: LocalAchievement[] | null =
     await localforage.getItem("achievements");
-  if (!localAchievements) {
-    void localforage.setItem("achievements", []);
-    return [];
+  if (!series) {
+    throw new Error("Series is undefined");
   }
-  return localAchievements;
+  if (!localAchievements) {
+    const updatedAchievements: LocalAchievement[] = series.map((s) => ({
+      id: s.id,
+      achievement: s.achievement.map((a) => ({
+        id: a.id,
+        status: false,
+      })),
+    }));
+    await localforage.setItem("achievements", updatedAchievements);
+    return updatedAchievements;
+  }
+  const updatedAchievements = series.map((s) => {
+    const localSeries = localAchievements.find((la) => la.id === s.id);
+    if (!localSeries) {
+      return {
+        id: s.id,
+        achievement: s.achievement.map((a) => ({
+          id: a.id,
+          status: false,
+        })),
+      };
+    }
+    return {
+      id: s.id,
+      achievement: s.achievement.map((a) => {
+        const localAchievement = localSeries.achievement.find(
+          (la) => la.id === a.id
+        );
+        if (!localAchievement) {
+          return {
+            id: a.id,
+            status: false,
+          };
+        }
+        return localAchievement;
+      }),
+    };
+  });
+  await localforage.setItem("achievements", updatedAchievements);
+  return updatedAchievements;
 };
