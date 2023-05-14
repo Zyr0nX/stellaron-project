@@ -22,10 +22,11 @@ export interface SeriesProps {
 export interface AchievementSectionProps {
   series: Series | undefined;
   selectedSeriesSignal: Signal<Series | undefined>;
+  seriesSignal: Signal<Series[] | undefined>;
 }
 
 export const AchievementSection = component$(
-  ({ series, selectedSeriesSignal }: AchievementSectionProps) => {
+  ({ series, selectedSeriesSignal, seriesSignal }: AchievementSectionProps) => {
     const localAchievementsSignal = useSignal<LocalAchievement[]>();
     useVisibleTask$(async () => {
       const achievements = await localforage.getItem<LocalAchievement[]>(
@@ -40,23 +41,55 @@ export const AchievementSection = component$(
       throw new Error("Series not found");
     }
     return (
-      <div
-        class={`flex flex-col gap-4 ${
-          selectedSeriesSignal.value ? "" : "hidden"
-        }`}
-      >
-        {series.achievement.map((achievement) => (
-          <Achievement
-            key={achievement.id}
-            achievement={achievement}
-            selected={
-              localAchievementsSignal.value?.some((a) =>
-                a.achievement.some((b) => b.id === achievement.id && b.status)
-              ) ?? false
+      <div class="flex flex-col gap-6">
+        <div class="flex items-center justify-between">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6" onClick$={() => {
+            selectedSeriesSignal.value = seriesSignal.value?.findIndex((a) => a.id === series.id) === 0 ? seriesSignal.value[seriesSignal.value.length - 1] : seriesSignal.value?.find((a) => a.id === series.id - 1);
+          }}>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+
+          <div class="flex flex-col justify-center items-center">
+            <p class="text-lg font-semibold">{selectedSeriesSignal.value?.name}</p>
+            <p>{selectedSeriesSignal.value?.achievement.reduce((acc, obj) => {
+              if (localAchievementsSignal.value?.find((a) => a.achievement.some((b) => b.id === obj.id && b.status))) {
+                return acc + 1;
+              } else {
+                return acc;
+              }
+            }, 0) ?? 0}
+            /{series.achievement.length}</p>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-6 h-6" onClick$={
+            () => {
+              selectedSeriesSignal.value = seriesSignal.value?.findIndex((a) => a.id === series.id) === (seriesSignal.value?.length ?? 1) - 1 ? seriesSignal.value[0] : seriesSignal.value?.find((a) => a.id === series.id + 1);
             }
-          />
-        ))}
+          }>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+
+
+        </div>
+        <div
+          class={`flex flex-col gap-4 ${
+            selectedSeriesSignal.value ? "" : "hidden"
+          }`}
+        >
+          {series.achievement.map((achievement) => (
+            <Achievement
+              key={achievement.id}
+              achievement={achievement}
+              selected={
+                localAchievementsSignal.value?.some((a) =>
+                  a.achievement.some((b) => b.id === achievement.id && b.status)
+                ) ?? false
+              }
+            />
+          ))}
+        </div>
+
       </div>
+      
     );
   }
 );
@@ -83,7 +116,7 @@ export const Achievement = component$(
             dangerouslySetInnerHTML={achievement.description}
           />
         </div>
-        <div class="flex gap-3 items-center">
+        <div class="flex gap-3 items-center shrink-0">
           <div class="flex gap-0.5 items-center">
             <p>{achievement.reward}</p>
             <img
@@ -249,6 +282,7 @@ export const Achievements = component$(() => {
       <AchievementSection
         series={selectedSeriesSignal.value ?? seriesSignal.value?.[0]}
         selectedSeriesSignal={selectedSeriesSignal}
+        seriesSignal={seriesSignal}
       />
     </>
   );

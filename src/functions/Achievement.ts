@@ -40,9 +40,10 @@ const getSeries = () => {
                       ? data.ParamList[i - 1].Value.toString()
                       : ""
                   )
-                  .replace(/unbreak/g, "strong"),
+                  .replace(/unbreak/g, "strong")
+                  .replace(/\n※ /g, "</br>"),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
-                version: "a",
+                version: "1.0",
               },
             ],
           },
@@ -63,7 +64,8 @@ const getSeries = () => {
                       ? data.ParamList[i - 1].Value.toString()
                       : ""
                   )
-                  .replace(/unbreak/g, "strong"),
+                  .replace(/unbreak/g, "strong")
+                  .replace(/\n※ /g, "</br>"),
                 reward: { Low: 5, Mid: 10, High: 20 }[data.Rarity] ?? 0,
                 version: "1.0",
               },
