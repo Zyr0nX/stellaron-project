@@ -12,7 +12,7 @@ export interface SeriesProps {
 
 import { LocalAchievement, Series } from "~/types/achievement";
 import {
-  getOrCreateOrUpdateAchievements,
+  getOrCreateAchievements,
   seriesServer,
 } from "~/functions/Achievement";
 
@@ -67,8 +67,7 @@ export const Achievement = component$(() => {
     seriesSignal.value = series;
   });
   useVisibleTask$(async () => {
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const localAchievements = await getOrCreateOrUpdateAchievements(seriesSignal.value!);
+    const localAchievements = await getOrCreateAchievements();
     localAchievementsSignal.value = localAchievements;
   });
 

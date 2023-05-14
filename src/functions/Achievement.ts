@@ -70,50 +70,12 @@ const getSeries = () => {
 
 export const seriesServer = server$(() => getSeries())();
 
-export const getOrCreateOrUpdateAchievements = async (series: Series[]) => {
+export const getOrCreateAchievements = async () => {
   const localAchievements: LocalAchievement[] | null =
     await localforage.getItem("achievements");
   if (!localAchievements) {
-    const newLocalAchievement: LocalAchievement[] = series.map((series) => ({
-      id: series.id,
-      achievement: series.achievement.map((achievement) => ({
-        id: achievement.id,
-        status: false,
-      })),
-    }));
-    void localforage.setItem("achievements", newLocalAchievement);
-    return newLocalAchievement;
+    void localforage.setItem("achievements", []);
+    return [];
   }
-
-  const newLocalAchievement = series.map((series) => {
-    const localSeries = localAchievements.find(
-      (localSeries) => localSeries.id === series.id
-    );
-    if (!localSeries) {
-      return {
-        id: series.id,
-        achievement: series.achievement.map((achievement) => ({
-          id: achievement.id,
-          status: false,
-        })),
-      };
-    }
-    return {
-      ...localSeries,
-      achievement: series.achievement.map((achievement) => {
-        const localAchievement = localSeries.achievement.find(
-          (localAchievement) => localAchievement.id === achievement.id
-        );
-        if (!localAchievement) {
-          return {
-            id: achievement.id,
-            status: false,
-          };
-        }
-        return localAchievement;
-      }),
-    };
-  });
-  void localforage.setItem("achievements", newLocalAchievement);
-  return newLocalAchievement;
+  return localAchievements;
 };
