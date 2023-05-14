@@ -3,9 +3,12 @@ import { component$ } from "@builder.io/qwik";
 export const Header = component$(() => {
   return (
     <div class="flex h-24 items-center justify-between bg-blue-950 p-4">
-      <h1 class="font-serif text-xl font-semibold tracking-widest">
+      <a
+        href="/"
+        class="select-none px-4 font-serif text-xl font-semibold tracking-widest"
+      >
         Stellaron
-      </h1>
+      </a>
       <a href="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
