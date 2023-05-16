@@ -30,7 +30,7 @@ const getSeries = () => {
           {
             id: data.SeriesID,
             name: seriesName,
-            achievement: [
+            achievements: [
               {
                 id: data.AchievementID,
                 name: hashLookup(data.AchievementTitle.Hash)
@@ -54,8 +54,8 @@ const getSeries = () => {
         if (s.id === data.SeriesID) {
           return {
             ...s,
-            achievement: [
-              ...s.achievement,
+            achievements: [
+              ...s.achievements,
               {
                 id: data.AchievementID,
                 name: hashLookup(data.AchievementTitle.Hash)
@@ -85,7 +85,7 @@ const getSeries = () => {
 
 export const seriesServer = server$(() => {
   return getSeries();
-})();
+});
 
 export const getOrCreateOrUpdateAchievements = async (series: Series[]) => {
   const localAchievements: LocalAchievement[] | null =
@@ -93,7 +93,7 @@ export const getOrCreateOrUpdateAchievements = async (series: Series[]) => {
   if (!localAchievements) {
     const updatedAchievements: LocalAchievement[] = series.map((s) => ({
       id: s.id,
-      achievement: s.achievement.map((a) => ({
+      achievements: s.achievements.map((a) => ({
         id: a.id,
         status: false,
       })),
@@ -106,7 +106,7 @@ export const getOrCreateOrUpdateAchievements = async (series: Series[]) => {
     if (!localSeries) {
       return {
         id: s.id,
-        achievement: s.achievement.map((a) => ({
+        achievements: s.achievements.map((a) => ({
           id: a.id,
           status: false,
         })),
@@ -114,8 +114,8 @@ export const getOrCreateOrUpdateAchievements = async (series: Series[]) => {
     }
     return {
       id: s.id,
-      achievement: s.achievement.map((a) => {
-        const localAchievement = localSeries.achievement.find(
+      achievements: s.achievements.map((a) => {
+        const localAchievement = localSeries.achievements.find(
           (la) => la.id === a.id
         );
         if (!localAchievement) {
@@ -143,7 +143,7 @@ export const getOrInitializeAchievements = async (
   if (!localAchievements) {
     const updatedAchievements: LocalAchievement[] = series.map((s) => ({
       id: s.id,
-      achievement: s.achievement.map((a) => ({
+      achievements: s.achievements.map((a) => ({
         id: a.id,
         status: false,
       })),
@@ -156,7 +156,7 @@ export const getOrInitializeAchievements = async (
     if (!localSeries) {
       return {
         id: s.id,
-        achievement: s.achievement.map((a) => ({
+        achievements: s.achievements.map((a) => ({
           id: a.id,
           status: false,
         })),
@@ -164,8 +164,8 @@ export const getOrInitializeAchievements = async (
     }
     return {
       id: s.id,
-      achievement: s.achievement.map((a) => {
-        const localAchievement = localSeries.achievement.find(
+      achievements: s.achievements.map((a) => {
+        const localAchievement = localSeries.achievements.find(
           (la) => la.id === a.id
         );
         if (!localAchievement) {

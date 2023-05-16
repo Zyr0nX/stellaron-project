@@ -1,6 +1,6 @@
 export interface LocalAchievement {
   id: number;
-  achievement: {
+  achievements: {
     id: number;
     status: boolean;
   }[];
@@ -51,7 +51,7 @@ export interface RawDataAchievement {
 export interface Series {
   id: number;
   name: string;
-  achievement: {
+  achievements: {
     id: number;
     name: string;
     description: string;

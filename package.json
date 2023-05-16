@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "StarRailData": "github:DimBreath/StarRailData",
+    "fuzzysort": "^2.0.4",
     "localforage": "^1.10.0"
   },
   "packageManager": "yarn@1.22.19"
