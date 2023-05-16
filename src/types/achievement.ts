@@ -56,6 +56,5 @@ export interface Series {
     name: string;
     description: string;
     reward: number;
-    version: string;
   }[];
 }
