@@ -4,19 +4,22 @@ import { LocalAchievement, Series as S } from "~/types/achievement";
 export interface SeriesProps {
   series: S;
   selectedSeriesSignal: Signal<S | undefined>;
+  selectedSeries: S | undefined;
   localSeries: LocalAchievement | undefined;
 }
 
 export const Series = component$(
-  ({ series, localSeries, selectedSeriesSignal }: SeriesProps) => {
-    if (!localSeries) {
-      throw new Error("Local Series not found");
-    }
+  ({
+    series,
+    localSeries,
+    selectedSeriesSignal,
+    selectedSeries,
+  }: SeriesProps) => {
     return (
       <button
         type="button"
-        class={`relative flex items-center justify-between overflow-hidden rounded-lg bg-blue-950 px-6 pb-4 pt-3 text-left ${
-          selectedSeriesSignal.value?.id === series.id
+        class={`relative flex items-center justify-between overflow-hidden rounded-lg px-6 pb-4 pt-3 text-left ${
+          selectedSeries?.id === series.id
             ? "cursor-default bg-blue-900"
             : "bg-blue-950"
         }`}
@@ -27,13 +30,13 @@ export const Series = component$(
         <div class="flex grow flex-col gap-1">
           <p class="text-lg font-semibold">{series.name}</p>
           <p class="font-light">
-            {localSeries.achievements.reduce((acc, cur) => {
+            {localSeries?.achievements.reduce((acc, cur) => {
               if (cur.status) {
                 return acc + 1;
               } else {
                 return acc;
               }
-            }, 0)}
+            }, 0) ?? 0}
             /{series.achievements.length}
           </p>
         </div>
@@ -50,13 +53,15 @@ export const Series = component$(
           class="absolute bottom-0 left-0 h-1 bg-teal-500 transition-all"
           style={{
             width: `${
-              localSeries.achievements.reduce((acc, obj) => {
-                if (obj.status) {
+              ((localSeries?.achievements.reduce((acc, cur) => {
+                if (cur.status) {
                   return acc + 1;
                 } else {
                   return acc;
                 }
-              }, 0) / series.achievements.length
+              }, 0) ?? 0) *
+                100) /
+              series.achievements.length
             }%`,
           }}
         ></div>

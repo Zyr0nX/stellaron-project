@@ -1,11 +1,5 @@
 import { Achievement } from "./achievement";
-import {
-  Signal,
-  component$,
-  useSignal,
-  useVisibleTask$,
-} from "@builder.io/qwik";
-import localforage from "localforage";
+import { Signal, component$ } from "@builder.io/qwik";
 import { LocalAchievement, Series } from "~/types/achievement";
 
 export interface AchievementSectionProps {
@@ -28,34 +22,37 @@ export const AchievementSection = component$(
     if (!series) {
       throw new Error("Series not found");
     }
+    console.log(selectedSeries);
     return (
       <div
-        class={`flex flex-col gap-6 ${
+        class={`sm:flex sm:flex-col sm:gap-6 ${
           selectedSeriesSignal.value ? "" : "hidden"
         }`}
       >
-        <div class="flex items-center justify-between">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="3"
-            stroke="currentColor"
-            class="h-6 w-6"
-            onClick$={() => {
-              selectedSeriesSignal.value =
-                series.findIndex((a) => a.id === selectedSeries.id) ===
-                series.length - 1
-                  ? series[0]
-                  : series.find((a) => a.id === selectedSeries.id + 1);
-            }}
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M15.75 19.5L8.25 12l7.5-7.5"
-            />
-          </svg>
+        <div class="flex items-center justify-between sm:hidden">
+          <button class="h-14">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="h-6 w-6"
+              onClick$={() => {
+                selectedSeriesSignal.value =
+                  series.findIndex((a) => a.id === selectedSeries.id) ===
+                  series.length - 1
+                    ? series[0]
+                    : series.find((a) => a.id === selectedSeries.id + 1);
+              }}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
 
           <div class="flex flex-col items-center justify-center">
             <p class="text-lg font-semibold">
@@ -76,26 +73,28 @@ export const AchievementSection = component$(
               /{selectedSeries.achievements.length}
             </p>
           </div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="3"
-            stroke="currentColor"
-            class="h-6 w-6"
-            onClick$={() => {
-              selectedSeriesSignal.value =
-                series.findIndex((a) => a.id === selectedSeries.id) === 0
-                  ? series[series.length - 1]
-                  : series.find((a) => a.id === selectedSeries.id - 1);
-            }}
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M8.25 4.5l7.5 7.5-7.5 7.5"
-            />
-          </svg>
+          <button type="button" class="h-14">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="h-6 w-6"
+              onClick$={() => {
+                selectedSeriesSignal.value =
+                  series.findIndex((a) => a.id === selectedSeries.id) === 0
+                    ? series[series.length - 1]
+                    : series.find((a) => a.id === selectedSeries.id - 1);
+              }}
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
         </div>
         <div class="flex flex-col gap-4">
           {selectedSeries.achievements.map((achievement) => (

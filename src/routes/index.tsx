@@ -39,11 +39,10 @@ export default component$(() => {
   return (
     <>
       <Header />
-      <div class="m-4 flex flex-col gap-5">
-        {selectedSeriesSignal.value && (
-          <Back onClick={$(() => (selectedSeriesSignal.value = undefined))} />
-        )}
-
+      {selectedSeriesSignal.value && (
+        <Back onClick={$(() => (selectedSeriesSignal.value = undefined))} />
+      )}
+      <div class="m-4 grid grid-cols-1 gap-5 sm:grid-cols-[20rem_2fr]">
         <Progress
           progress={
             localAchievementsSignal.value?.reduce(
@@ -77,21 +76,24 @@ export default component$(() => {
         ) : (
           <>
             <div
-              class={`flex flex-col gap-4 ${
-                selectedSeriesSignal.value ? "hidden" : ""
+              class={`${
+                selectedSeriesSignal.value
+                  ? "hidden sm:flex sm:flex-col sm:gap-4"
+                  : "flex flex-col gap-4"
               }`}
             >
               {seriesSignal.value?.map((series) => (
                 <div class="flex flex-col gap-4" key={series.id}>
-                  {localAchievementsSignal.value && (
-                    <Series
-                      series={series}
-                      selectedSeriesSignal={selectedSeriesSignal}
-                      localSeries={localAchievementsSignal.value.find(
-                        (localAchievement) => localAchievement.id === series.id
-                      )}
-                    />
-                  )}
+                  <Series
+                    series={series}
+                    selectedSeriesSignal={selectedSeriesSignal}
+                    selectedSeries={
+                      selectedSeriesSignal.value ?? seriesSignal.value?.[0]
+                    }
+                    localSeries={localAchievementsSignal.value?.find(
+                      (localAchievement) => localAchievement.id === series.id
+                    )}
+                  />
                 </div>
               ))}
             </div>
