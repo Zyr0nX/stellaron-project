@@ -39,10 +39,11 @@ export default component$(() => {
   return (
     <>
       <Header />
-      {selectedSeriesSignal.value && (
-        <Back onClick={$(() => (selectedSeriesSignal.value = undefined))} />
-      )}
-      <div class="m-4 grid grid-cols-1 gap-5 sm:grid-cols-[20rem_2fr]">
+
+      <div class="m-4 grid grid-cols-1 gap-5 sm:grid-cols-[20rem_1fr]">
+        {selectedSeriesSignal.value && (
+          <Back onClick={$(() => (selectedSeriesSignal.value = undefined))} />
+        )}
         <Progress
           progress={
             localAchievementsSignal.value?.reduce(

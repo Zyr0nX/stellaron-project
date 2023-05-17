@@ -22,12 +22,13 @@ export const AchievementSection = component$(
     if (!series) {
       throw new Error("Series not found");
     }
-    console.log(selectedSeries);
     return (
       <div
-        class={`sm:flex sm:flex-col sm:gap-6 ${
-          selectedSeriesSignal.value ? "" : "hidden"
-        }`}
+        class={
+          selectedSeriesSignal.value
+            ? "flex flex-col gap-6"
+            : "hidden sm:flex sm:flex-col sm:gap-6"
+        }
       >
         <div class="flex items-center justify-between sm:hidden">
           <button class="h-14">

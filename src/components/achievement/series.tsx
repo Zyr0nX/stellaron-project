@@ -30,14 +30,17 @@ export const Series = component$(
         <div class="flex grow flex-col gap-1">
           <p class="text-lg font-semibold">{series.name}</p>
           <p class="font-light">
-            {localSeries?.achievements.reduce((acc, cur) => {
-              if (cur.status) {
-                return acc + 1;
-              } else {
-                return acc;
-              }
-            }, 0) ?? 0}
-            /{series.achievements.length}
+            {(
+              localSeries?.achievements.reduce((acc, cur) => {
+                if (cur.status) {
+                  return acc + 1;
+                } else {
+                  return acc;
+                }
+              }, 0) ?? 0
+            ).toString() +
+              "/" +
+              series.achievements.length.toString()}
           </p>
         </div>
         <div class="flex items-center gap-0.5">

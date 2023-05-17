@@ -1,4 +1,4 @@
-import { Component, component$, $ } from "@builder.io/qwik";
+import { Component, component$ } from "@builder.io/qwik";
 
 interface BackProps {
   onClick: () => void;
@@ -6,7 +6,10 @@ interface BackProps {
 
 export const Back: Component<BackProps> = component$((props) => {
   return (
-    <button class="flex w-fit items-center gap-1" onClick$={props.onClick}>
+    <button
+      class="flex w-fit items-center gap-1 sm:hidden"
+      onClick$={props.onClick}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
