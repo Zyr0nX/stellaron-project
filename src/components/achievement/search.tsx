@@ -10,15 +10,17 @@ interface SearchProps {
 export const Search: Component<SearchProps> = component$((props) => {
   const searchSignal = useSignal<string>();
   const search = $(() => {
-    props.searchAchievementResultSignal.value = fuzzysort
-      .go(
-        searchSignal.value ?? "",
-        props.series?.flatMap((s) => s.achievements) ?? [],
-        {
-          key: "name",
-        }
-      )
-      .map((obj) => obj.obj);
+    props.searchAchievementResultSignal.value = searchSignal.value
+      ? (props.searchAchievementResultSignal.value = fuzzysort
+          .go(
+            searchSignal.value,
+            props.series?.flatMap((s) => s.achievements) ?? [],
+            {
+              key: "name",
+            }
+          )
+          .map((obj) => obj.obj))
+      : undefined;
   });
   return (
     <div class="flex h-10 rounded-xl bg-blue-950">

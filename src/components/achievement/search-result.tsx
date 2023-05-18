@@ -3,12 +3,15 @@ import { Component, Signal, component$ } from "@builder.io/qwik";
 import { LocalAchievement, Series } from "~/types/achievement";
 
 interface SearchResultProps {
-  achievements: Series["achievements"];
+  achievements: Series["achievements"] | undefined;
   localAchievementsSignal: Signal<LocalAchievement[] | undefined>;
 }
 
 export const SearchResult: Component<SearchResultProps> = component$(
   ({ achievements, localAchievementsSignal }) => {
+    if (!achievements) {
+      return null;
+    }
     return (
       <div class="flex flex-col gap-4">
         {achievements.map((achievement) => (

@@ -32,7 +32,7 @@ export const Header = component$(() => {
           </svg>
         </button>
       </div>
-      {/* {sidebarSignal.value && <Sidebar />} */}
+      {sidebarSignal.value && <Sidebar />}
     </>
   );
 });

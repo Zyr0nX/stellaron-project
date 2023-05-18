@@ -19,9 +19,7 @@ export const Series = component$(
       <button
         type="button"
         class={`relative flex items-center justify-between overflow-hidden rounded-lg px-6 pb-4 pt-3 text-left ${
-          selectedSeries?.id === series.id
-            ? "cursor-default bg-blue-900"
-            : "bg-blue-950"
+          selectedSeries?.id === series.id ? "bg-blue-900" : "bg-blue-950"
         }`}
         onClick$={() => {
           selectedSeriesSignal.value = series;

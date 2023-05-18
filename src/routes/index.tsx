@@ -39,7 +39,6 @@ export default component$(() => {
   return (
     <>
       <Header />
-
       <div class="m-4 grid grid-cols-1 gap-5 sm:grid-cols-[20rem_1fr]">
         {selectedSeriesSignal.value && (
           <Back onClick={$(() => (selectedSeriesSignal.value = undefined))} />
@@ -69,44 +68,43 @@ export default component$(() => {
           searchAchievementResultSignal={searchAchievementResultSignal}
           series={seriesSignal.value}
         />
+
+        <div
+          class={`${
+            selectedSeriesSignal.value || searchAchievementResultSignal.value
+              ? "hidden sm:flex sm:flex-col sm:gap-4"
+              : "flex flex-col gap-4"
+          }`}
+        >
+          {seriesSignal.value?.map((series) => (
+            <div class="flex flex-col gap-4" key={series.id}>
+              <Series
+                series={series}
+                selectedSeriesSignal={selectedSeriesSignal}
+                selectedSeries={
+                  selectedSeriesSignal.value ?? seriesSignal.value?.[0]
+                }
+                localSeries={localAchievementsSignal.value?.find(
+                  (localAchievement) => localAchievement.id === series.id
+                )}
+              />
+            </div>
+          ))}
+        </div>
         {searchAchievementResultSignal.value ? (
           <SearchResult
             achievements={searchAchievementResultSignal.value}
             localAchievementsSignal={localAchievementsSignal}
           />
         ) : (
-          <>
-            <div
-              class={`${
-                selectedSeriesSignal.value
-                  ? "hidden sm:flex sm:flex-col sm:gap-4"
-                  : "flex flex-col gap-4"
-              }`}
-            >
-              {seriesSignal.value?.map((series) => (
-                <div class="flex flex-col gap-4" key={series.id}>
-                  <Series
-                    series={series}
-                    selectedSeriesSignal={selectedSeriesSignal}
-                    selectedSeries={
-                      selectedSeriesSignal.value ?? seriesSignal.value?.[0]
-                    }
-                    localSeries={localAchievementsSignal.value?.find(
-                      (localAchievement) => localAchievement.id === series.id
-                    )}
-                  />
-                </div>
-              ))}
-            </div>
-            <AchievementSection
-              selectedSeries={
-                selectedSeriesSignal.value ?? seriesSignal.value?.[0]
-              }
-              selectedSeriesSignal={selectedSeriesSignal}
-              series={seriesSignal.value}
-              localAchievementsSignal={localAchievementsSignal}
-            />
-          </>
+          <AchievementSection
+            selectedSeries={
+              selectedSeriesSignal.value ?? seriesSignal.value?.[0]
+            }
+            selectedSeriesSignal={selectedSeriesSignal}
+            series={seriesSignal.value}
+            localAchievementsSignal={localAchievementsSignal}
+          />
         )}
       </div>
     </>
