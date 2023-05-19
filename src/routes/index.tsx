@@ -70,7 +70,7 @@ export default component$(() => {
         />
 
         <div
-          class={`${
+          class={`sm:sticky sm:top-16 sm:h-[calc(100vh-5rem)] sm:self-start sm:overflow-auto sm:pr-1 sm:scrollbar-thin sm:scrollbar-track-transparent sm:scrollbar-thumb-blue-900 sm:scrollbar-thumb-rounded-full ${
             selectedSeriesSignal.value || searchAchievementResultSignal.value
               ? "hidden sm:flex sm:flex-col sm:gap-4"
               : "flex flex-col gap-4"

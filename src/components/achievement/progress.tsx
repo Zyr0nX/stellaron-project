@@ -7,7 +7,7 @@ export interface ProgressProps {
 
 export const Progress = component$<ProgressProps>(({ progress, total }) => {
   return (
-    <div class="flex flex-col gap-1.5">
+    <div class="flex flex-col gap-1.5 sm:sticky sm:top-0">
       <div class="flex items-center justify-between font-semibold">
         <p>Achievement:</p>
         <p>

@@ -50,5 +50,6 @@
 
   html {
     @apply bg-slate-950 text-blue-50;
+    @apply scrollbar-thin scrollbar-track-transparent scrollbar-thumb-blue-900 scrollbar-thumb-rounded-full;
   }
 }

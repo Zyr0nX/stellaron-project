@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useVisibleTask$ } from "@builder.io/qwik";
 import { useLocation } from "@builder.io/qwik-city";
 
 const sidebarItems = [
@@ -14,6 +14,9 @@ const sidebarItems = [
 
 export const Sidebar = component$(() => {
   const location = useLocation();
+  useVisibleTask$(() => {
+    console.log("sidebar visible");
+  });
   return (
     <div class="h-screen w-screen bg-blue-950">
       {sidebarItems.map((item) => (
