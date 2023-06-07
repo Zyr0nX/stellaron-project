@@ -992,10 +992,10 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
-"@builder.io/qwik-city@^1.1.1":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@builder.io/qwik-city/-/qwik-city-1.1.4.tgz#950397349e1659a2b6e42c29d0e52a7e04046efe"
-  integrity sha512-J6EAZN2vXaoou5PBC3GS6Z0RTC4jzXXNup+gLQou4yMVPnnI+i4g1bD1240Uo0VDhTLJQkBHxKWMWwRqgckISA==
+"@builder.io/qwik-city@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@builder.io/qwik-city/-/qwik-city-1.1.5.tgz#7c0d333046ee8f3cb7692de1251313fe83a90e41"
+  integrity sha512-AzIlyyP8nmv3DRXVtiBUcjMtazIaLr0U3hHoieqrtK+XfdhTXdKjzFX9ceUj0zSwX4wrvX86BtwrYJDMeJ+AuA==
   dependencies:
     "@mdx-js/mdx" "2.3.0"
     "@types/mdx" "2.0.5"
