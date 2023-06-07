@@ -3321,10 +3321,10 @@ escodegen@^1.8.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-plugin-qwik@^1.1.1:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-qwik/-/eslint-plugin-qwik-1.1.4.tgz#9bc863e2ec320321a9fd8d68107091497b702883"
-  integrity sha512-RHeH/OwYu6iLxVxyuHshCRiIetmrsEo585yGC8ZRTuIa25zCUbD54w/KumXU6u4W5t00NxxrDwt3+ZH206hQEA==
+eslint-plugin-qwik@^1.1.5:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-qwik/-/eslint-plugin-qwik-1.1.5.tgz#88707d67fd84fc9b55f7c9c9e5075916460a5c9f"
+  integrity sha512-fTVZ+XAioqgzs1SkwS43mQl2BSNByWfwdlFSsCPzs4BAAxM9Ii8P1qImBYCAeISYf975G/+VFKpxDmP6FdiFtw==
   dependencies:
     jsx-ast-utils "^3.3.3"
 
