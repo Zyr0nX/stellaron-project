@@ -1003,10 +1003,10 @@
     vfile "5.3.7"
     zod "^3.21.4"
 
-"@builder.io/qwik@^1.1.1":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@builder.io/qwik/-/qwik-1.1.4.tgz#8109b294ff23ca615ffc79deee405bc3df16c4cf"
-  integrity sha512-FSbe2GcUBptAXMAHfN+oGUpnb3nZXzup2EYlza61bAfgWSx9SryOwNULyROis3mu7Ywdua3w6VKvCWOFdovz2w==
+"@builder.io/qwik@^1.1.5":
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/@builder.io/qwik/-/qwik-1.1.5.tgz#70dbe9e1e4644b745354096a27b1f976edffce0b"
+  integrity sha512-/CZzZaUPctUBHNjchJRXV+JC28HZtv4JteCKnpqjp8YcvzHNuB3A0FpIGEzEWD/F/pg+4YunvxrBSb9ZdPJROw==
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
