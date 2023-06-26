@@ -2130,7 +2130,8 @@
 
 "StarRailData@github:DimBreath/StarRailData":
   version "0.0.0"
-  resolved "https://codeload.github.com/DimBreath/StarRailData/tar.gz/6afd96fa9660510232f291909646551af52e6f96"
+  uid "1ab86f99405026f6c9b1be98661a584e1a38a0df"
+  resolved "https://codeload.github.com/DimBreath/StarRailData/tar.gz/1ab86f99405026f6c9b1be98661a584e1a38a0df"
 
 abbrev@1:
   version "1.1.1"
