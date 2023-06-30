@@ -22,7 +22,7 @@
     "qwik": "qwik"
   },
   "devDependencies": {
-    "@builder.io/qwik": "^1.1.1",
+    "@builder.io/qwik": "^1.2.2",
     "@builder.io/qwik-city": "^1.1.1",
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
