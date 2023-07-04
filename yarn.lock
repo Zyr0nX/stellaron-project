@@ -1003,10 +1003,12 @@
     vfile "5.3.7"
     zod "^3.21.4"
 
-"@builder.io/qwik@^1.1.1":
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/@builder.io/qwik/-/qwik-1.1.4.tgz#8109b294ff23ca615ffc79deee405bc3df16c4cf"
-  integrity sha512-FSbe2GcUBptAXMAHfN+oGUpnb3nZXzup2EYlza61bAfgWSx9SryOwNULyROis3mu7Ywdua3w6VKvCWOFdovz2w==
+"@builder.io/qwik@^1.2.4":
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/@builder.io/qwik/-/qwik-1.2.4.tgz#da0b2b1b7d80ceba9608492d94a62bee9d79c205"
+  integrity sha512-8nCSI23v3pxR8sMvoM/fw0wBSaxpITRwEyt7XTHRt+xoRwdQnfap8td66j+D7EDFDBynO88afKkmLZhMzDmW5A==
+  dependencies:
+    csstype "^3.1.2"
 
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
@@ -2814,7 +2816,7 @@ cssesc@^3.0.0:
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
 
-csstype@^3.0.7:
+csstype@^3.0.7, csstype@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.2.tgz#1d4bf9d572f11c14031f0436e1c10bc1f571f50b"
   integrity sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ==
