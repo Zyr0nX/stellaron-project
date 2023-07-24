@@ -40,7 +40,7 @@
     "typescript": "^5.0.4",
     "undici": "^5.22.0",
     "vercel": "^29.1.1",
-    "vite": "^4.3.7",
+    "vite": "^4.4.6",
     "vite-tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
